@@ -1,0 +1,46 @@
+{
+    "name": "npm-audit-sarif",
+    "version": "0.0.1",
+    "description": "A tool for converting npm-audit json output to sarif format",
+    "main": "dist/main.js",
+    "bin": {
+        "npm-audit-sarif": "./npm-audit-sarif"
+    },
+    "scripts": {
+        "build": "tsc",
+        "lint:sarif": "eslint .  --ext .ts -f @microsoft/eslint-formatter-sarif -o eslint.sarif",
+        "lint": "eslint .",
+        "lint-fix": "eslint --fix .  --ext .js",
+        "sonar": "sonar-scanner -X",
+        "test": "jest --coverage"
+    },
+    "keywords": [
+        "NPM",
+        "NPM Audit",
+        "Sarif",
+        "SonarQube"
+    ],
+    "homepage": "https://github.com/mydeveloperday/npm-audit-sarif",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mydeveloperday/npm-audit-sarif"
+    },
+    "bugs": "https://github.com/mydeveloperday/npm-audit-sarif/issues",
+    "author": "MyDeveloperDay <mydeveloperday@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "node-sarif-builder": "^2.0.3",
+        "yargs": "^17.7.2"
+    },
+    "devDependencies": {
+        "@babel/preset-typescript": "^7.21.5",
+        "@microsoft/eslint-formatter-sarif": "^3.0.0",
+        "@types/jest": "^29.5.1",
+        "eslint": "^8.41.0",
+        "eslint-plugin-jest": "^27.2.1",
+        "jest": "^29.5.0",
+        "ts-jest": "^29.1.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    }
+}
