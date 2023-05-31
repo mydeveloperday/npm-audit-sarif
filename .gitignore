@@ -3,3 +3,4 @@ sonar-project.properties
 .scannerwork
 dist
 testout.json
+coverage
