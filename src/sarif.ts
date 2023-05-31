@@ -8,6 +8,8 @@ const {
 } = require('node-sarif-builder')
 const yargs = require('yargs')
 
+const pjson = require('./package.json');
+
 export function minVal(val: number) {
     if (val) {
         return val;
@@ -37,7 +39,7 @@ export function main() {
             demandOption: false,
         })
         .demandCommand(1)
-        .usage('Usage: $0 [options] <filename>').argv
+        .usage('Usage: $0 [options] <filename>').argv;
 
     exportSarif(argv._[0], argv.output, argv.root);
 }
@@ -59,7 +61,7 @@ export interface Vulnerability
     via: Via[];
     isDirect: boolean;
     range: string;
-    fixAvailable: boolean
+    fixAvailable: boolean;
 };
 
 export function exportSarif(filename:string, outputfilename:string,rootdir:string) {
@@ -71,7 +73,7 @@ export function exportSarif(filename:string, outputfilename:string,rootdir:strin
     // SARIF Run builder
     const sarifRunBuilder = new SarifRunBuilder().initSimple({
         toolDriverName: 'npm-audit-sarif',
-        toolDriverVersion: '0.0.1',
+        toolDriverVersion: pjson.version,
     })
 
     for (const key in results.vulnerabilities) {

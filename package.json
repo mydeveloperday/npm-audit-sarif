@@ -1,6 +1,6 @@
 {
     "name": "npm-audit-sarif",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A tool for converting npm-audit json output to sarif format",
     "main": "dist/main.js",
     "bin": {
