@@ -1,6 +1,62 @@
 {
   "auditReportVersion": 2,
   "vulnerabilities": {
+    "@nestjs/core": {
+      "name": "@nestjs/core",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@nestjs/websockets",
+        {
+          "source": 1091325,
+          "name": "@nestjs/core",
+          "dependency": "@nestjs/core",
+          "title": "@nestjs/core vulnerable to Information Exposure via StreamableFile pipe",
+          "url": "https://github.com/advisories/GHSA-4jpv-8r57-pv7j",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-200"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+          },
+          "range": "<9.0.5"
+        }
+      ],
+      "effects": [
+        "@nestjs/websockets"
+      ],
+      "range": "<=9.0.4",
+      "nodes": [
+        "node_modules/@nestjs/core"
+      ],
+      "fixAvailable": {
+        "name": "@nestjs/websockets",
+        "version": "9.4.2",
+        "isSemVerMajor": true
+      }
+    },
+    "@nestjs/websockets": {
+      "name": "@nestjs/websockets",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@nestjs/core"
+      ],
+      "effects": [
+        "@nestjs/core"
+      ],
+      "range": "<=9.0.0-next.2",
+      "nodes": [
+        "node_modules/@nestjs/websockets"
+      ],
+      "fixAvailable": {
+        "name": "@nestjs/websockets",
+        "version": "9.4.2",
+        "isSemVerMajor": true
+      }
+    },
     "jsonwebtoken": {
       "name": "jsonwebtoken",
       "severity": "moderate",
@@ -101,18 +157,18 @@
     "vulnerabilities": {
       "info": 0,
       "low": 0,
-      "moderate": 2,
+      "moderate": 4,
       "high": 0,
       "critical": 0,
-      "total": 2
+      "total": 4
     },
     "dependencies": {
-      "prod": 18,
+      "prod": 22,
       "dev": 0,
       "optional": 0,
-      "peer": 0,
+      "peer": 29,
       "peerOptional": 0,
-      "total": 17
+      "total": 50
     }
   }
 }

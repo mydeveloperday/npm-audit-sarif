@@ -10,11 +10,11 @@ describe("saif tests", () => {
     });
 
     test('check relative', () => {
-        expect(relative("c:/cygwin64/source/", 'c:/cygwin64/source/npm-audit-sarif/openapi.yaml')).toEqual('npm-audit-sarif/openapi.yaml');
+        expect(relative("c:/cygwin64/source/", 'c:/cygwin64/source/npm-audit-sarif/audit.json')).toEqual('npm-audit-sarif/audit.json');
     });
 
     test('check relative case ensitive', () => {
-        expect(relative("c:/cygwin64/source/", 'c:/cygwin64/Source/npm-audit-sarif/openapi.yaml')).toEqual('npm-audit-sarif/openapi.yaml');
+        expect(relative("c:/cygwin64/source/", 'c:/cygwin64/Source/npm-audit-sarif/audit.json')).toEqual('npm-audit-sarif/audit.json');
     });
 
     test('check export', () => {
@@ -23,6 +23,8 @@ describe("saif tests", () => {
         expect(existsSync('testout.json')).toEqual(true);
     
         const results = JSON.parse(readFileSync('testout.json', 'utf8'))
+
+        expect(Object.keys(results.runs[0].results).length).toBe(5);
     });
 
     test('check export to console', () => {

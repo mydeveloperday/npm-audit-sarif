@@ -52,13 +52,14 @@ export interface Via
     title: string;
     url: string;
     severity: string;    
+    cwe: string[];
 };
 
 export interface Vulnerability
 {
     name: string;
     severity: string;
-    via: Via[];
+    via: Via[] | string[];
     isDirect: boolean;
     range: string;
     fixAvailable: boolean;
@@ -78,30 +79,55 @@ export function exportSarif(filename:string, outputfilename:string,rootdir:strin
 
     for (const key in results.vulnerabilities) {
         const value = results.vulnerabilities[key];
-        const msg = value.via[0].title;
+
+        for (const viaobj of value.via){ 
+            if (typeof (viaobj) == "string") {
+                continue;
+            }
+            const via: Via = viaobj as Via;
+            let msg = "Audit: " + via.severity + "\n" + via.name + "\n" + via.title + "\n" + via.url;
+
+            if (via.cwe.length) {
+                for (const cwe of via.cwe) {
+                    msg += "\n";
+                    msg += cwe;
+                }
+            }
+
+            let level = "error";
+            if (via.severity == "moderate") {
+                level = "info";
+            }
+            if (via.severity == "high") {
+                level = "warning";
+            }
+            if (via.severity == "critical") {
+                level = "error";
+            }
         
-        const ruleId = "npm-audit-"+key.toLowerCase().replaceAll("_","-").replaceAll(" ","-");
+            const ruleId = "npm-audit-" + key.toLowerCase().replaceAll("_", "-").replaceAll(" ", "-");
 
-        const sarifResultBuilder = new SarifResultBuilder()
-        const sarifResultInit = {
-            ruleId: ruleId,
-            level: 'error',
-            messageText: msg,
-            fileUri: relative(rootdir,"package.json"),   
+            const sarifResultBuilder = new SarifResultBuilder()
+            const sarifResultInit = {
+                ruleId: ruleId,
+                level: level,
+                messageText: msg,
+                fileUri: relative(rootdir, "package.json"),
             
-            startLine: 0,
-            startColumn: 0,
-            endLine: 0,
-            endColumn: 0
+                startLine: 0,
+                startColumn: 0,
+                endLine: 0,
+                endColumn: 0
+            }
+
+            sarifResultInit.startLine = 1;
+            sarifResultInit.startColumn = 1;
+            sarifResultInit.endLine = 1;
+            sarifResultInit.endColumn = 1;
+
+            sarifResultBuilder.initSimple(sarifResultInit)
+            sarifRunBuilder.addResult(sarifResultBuilder)
         }
-
-        sarifResultInit.startLine = 1;
-        sarifResultInit.startColumn = 1;
-        sarifResultInit.endLine = 1;
-        sarifResultInit.endColumn = 1;
-
-        sarifResultBuilder.initSimple(sarifResultInit)
-        sarifRunBuilder.addResult(sarifResultBuilder)
     }
 
     sarifBuilder.addRun(sarifRunBuilder)
