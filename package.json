@@ -1,6 +1,6 @@
 {
     "name": "npm-audit-sarif",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A tool for converting npm-audit json output to sarif format",
     "main": "dist/main.js",
     "bin": {
@@ -12,7 +12,8 @@
         "lint": "eslint .",
         "lint-fix": "eslint --fix .  --ext .js",
         "sonar": "sonar-scanner -X",
-        "test": "jest --coverage"
+        "test": "jest --coverage",
+        "version": "npm version patch --no-git-tag-version"
     },
     "keywords": [
         "NPM",
